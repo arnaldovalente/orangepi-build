@@ -12,7 +12,7 @@ setenv verbosity "1"
 setenv console "both"
 setenv bootlogo "false"
 setenv rootfstype "ext4"
-setenv docker_optimizations "on"
+setenv docker_optimizations "off"
 setenv earlycon "off"
 
 echo "Boot script loaded from ${devtype} ${devnum}"

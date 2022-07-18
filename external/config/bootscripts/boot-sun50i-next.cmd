@@ -10,7 +10,7 @@ setenv rootdev "/dev/mmcblk0p1"
 setenv verbosity "1"
 setenv rootfstype "ext4"
 setenv console "both"
-setenv docker_optimizations "on"
+setenv docker_optimizations "off"
 setenv bootlogo "false"
 
 # Print boot source

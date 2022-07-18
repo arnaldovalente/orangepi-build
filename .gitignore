@@ -42,3 +42,6 @@ external/cache/sources/ffmpeg_kodi*
 external/cache/sources/rk3399_gst_xserver_libs
 external/cache/sources/arm-trusted-firmware-sunxi-mainline
 .vscode/settings.json
+.vscode/configurationCache.log
+.vscode/dryrun.log
+.vscode/targets.log
