@@ -41,3 +41,4 @@ external/cache/sources/orangepi-firmware*
 external/cache/sources/ffmpeg_kodi*
 external/cache/sources/rk3399_gst_xserver_libs
 external/cache/sources/arm-trusted-firmware-sunxi-mainline
+.vscode/settings.json
