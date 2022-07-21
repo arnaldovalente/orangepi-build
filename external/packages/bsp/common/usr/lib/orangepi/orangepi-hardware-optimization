@@ -369,6 +369,13 @@ add_usb_storage_quirks() {
 		echo ${USBQUIRKS} >/sys/module/usb_storage/parameters/quirks
 	fi
 
+	resolution=$(cat /sys/class/graphics/fb0/virtual_size)
+	width=${resolution%%,*}
+	if [ "${width}" -gt 1920 ]; then
+		echo "extraargs=video=HDMI-A-1:1920x1080@60e" >> /boot/orangepiEnv.txt
+		reboot
+	fi
+
 } # add_usb_storage_quirks
 
 
