@@ -1,0 +1,58 @@
+#!/bin/bash
+#
+# Copyright (c) Authors: https://www.armbian.com/authors
+#
+# This file is licensed under the terms of the GNU General Public
+# License version 2. This program is licensed "as is" without any
+# warranty of any kind, whether express or implied.
+
+# Functions:
+#
+# set_io_scheduler
+# prepare_board
+# add_usb_storage_quirks
+
+
+# Read in basic OS image information
+. /etc/orangepi-release
+
+# and script configuration
+. /usr/lib/orangepi/orangepi-common
+
+# set audio
+#. /usr/lib/orangepi/orangepi-audio-config
+
+limit_resolution_to_fullhd() {
+
+	# check for /boot/orangepiEnv.txt existence
+	[ -f /boot/orangepiEnv.txt ] || return
+
+	# cleanup. add LF. This prevents adding parameters to the same line
+	echo "" >> /boot/orangepiEnv.txt;  sed -i '/^$/d;$G' /boot/orangepiEnv.txt; sed -i '/^$/d;$G' /boot/orangepiEnv.txt
+
+	# cleanup. remove empty lines in the middle
+	sed -i '/^$/d' /boot/orangepiEnv.txt
+
+	# preserve old contents if existent
+	TMPFILE=$(mktemp /tmp/${0##*/}.XXXXXX)
+	trap "sleep 1 ; rm \"${TMPFILE}\" ; exit 0" 0 1 2 3 15
+	awk -F"=" '/^extraargs/ {print $2}' </boot/orangepiEnv.txt | tr -d -c '[:graph:]' >${TMPFILE}
+
+	resolution=$(cat /sys/class/graphics/fb0/virtual_size)
+	width=${resolution%%,*}
+	if [ "${width}" -gt 1920 ]; then
+		echo "extraargs=video=HDMI-A-1:1920x1080@60e" >> /boot/orangepiEnv.txt
+		sed -i 's/# video_fullscreen_y = 0/video_fullscreen_y = 1920/' /opt/retropie/configs/all/retroarch.cfg
+		sed -i 's/# video_fullscreen_x = 0/video_fullscreen_x = 1080/' /opt/retropie/configs/all/retroarch.cfg
+		sed -i 's/# video_fullscreen = false/video_fullscreen = true/' /opt/retropie/configs/all/retroarch.cfg
+		reboot
+	fi
+
+} # limit_resolution_to_fullhd
+
+case $1 in
+	*start*)
+		# limit resolution to fullhd
+		limit_resolution_to_fullhd &
+		;;
+esac

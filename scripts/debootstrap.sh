@@ -757,7 +757,10 @@ create_image()
 		IMAGE_TYPE=desktop
 	fi
 
-	local version="${BOARD^}_${REVISION}_${DISTRIBUTION,}_${RELEASE}_${IMAGE_TYPE}"${DESKTOP_ENVIRONMENT:+_$DESKTOP_ENVIRONMENT}"_linux$(grab_version "$LINUXSOURCEDIR")"
+#	local version="${BOARD^}_${REVISION}_${DISTRIBUTION,}_${RELEASE}_${IMAGE_TYPE}"${DESKTOP_ENVIRONMENT:+_$DESKTOP_ENVIRONMENT}"_linux$(grab_version "$LINUXSOURCEDIR")"
+	local version="${BOARD^}_${REVISION}-${REARMIT_NAME}_${REARMIT_REVISION}-${REARMIT_DATE}"
+	[[ $REARMIT_STABLE == false ]] && version=${version}-dev
+
 	[[ $ROOTFS_TYPE == nfs ]] && version=${version}_nfsboot
 
 	destimg=$DEST/images/${version}
