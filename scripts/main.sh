@@ -114,7 +114,19 @@ if [[ $PROGRESS_LOG_TO_FILE != yes ]]; then unset PROGRESS_LOG_TO_FILE; fi
 
 SHOW_WARNING=yes
 
+if [[ -n $REARMIT_NAME ]]; then
+	REARMIT_NAME="rearm.it"
+fi
 
+if [[ -n $REARMIT_REVISION ]]; then
+	REARMIT_REVISION="v1"
+fi
+
+if [[ -n $REARMIT_NAME ]]; then
+	REARMIT_STABLE=false
+fi
+
+REARMIT_DATE=$(date +'%Y.%-m.%-d')
 
 if [[ $USE_CCACHE != no ]]; then
 
@@ -206,23 +218,23 @@ if [[ -z $BOARD ]]; then
 
 	#options+=("orangepir1"			"Allwinner H2+ quad core 256MB RAM WiFi SPI 2xETH")
 	#options+=("orangepizero"		"Allwinner H2+ quad core 256MB/512MB RAM WiFi SPI")
-	#options+=("orangepipc"			"Allwinner H3 quad core 1GB RAM")
-	#options+=("orangepipcplus"		"Allwinner H3 quad core 1GB RAM WiFi eMMC")
-	#options+=("orangepione"			"Allwinner H3 quad core 512MB RAM")
-	#options+=("orangepilite"		"Allwinner H3 quad core 512MB RAM WiFi")
-	#options+=("orangepiplus"		"Allwinner H3 quad core 1GB/2GB RAM WiFi GBE eMMC")
-	#options+=("orangepiplus2e"		"Allwinner H3 quad core 2GB RAM WiFi GBE eMMC")
-	#options+=("orangepizeroplus2h3" 	"Allwinner H3 quad core 512MB RAM WiFi/BT eMMC")
-	#options+=("orangepipch5"                "Allwinner H5 quad core 1GB RAM")
-	#options+=("orangepipc2"			"Allwinner H5 quad core 1GB RAM GBE SPI")
-	#options+=("orangepioneh5"               "Allwinner H5 quad core 512MB/1GB RAM")
-	#options+=("orangepiprime"		"Allwinner H5 quad core 2GB RAM GBE WiFi/BT")
-	#options+=("orangepizeroplus"		"Allwinner H5 quad core 512MB RAM GBE WiFi SPI")
-	#options+=("orangepizeroplus2h5"		"Allwinner H5 quad core 512MB RAM WiFi/BT eMMC")
+	options+=("orangepipc"			"Allwinner H3 quad core 1GB RAM")
+	options+=("orangepipcplus"		"Allwinner H3 quad core 1GB RAM WiFi eMMC")
+	options+=("orangepione"			"Allwinner H3 quad core 512MB RAM")
+	options+=("orangepilite"		"Allwinner H3 quad core 512MB RAM WiFi")
+	options+=("orangepiplus"		"Allwinner H3 quad core 1GB/2GB RAM WiFi GBE eMMC")
+	options+=("orangepiplus2e"		"Allwinner H3 quad core 2GB RAM WiFi GBE eMMC")
+	options+=("orangepizeroplus2h3" 	"Allwinner H3 quad core 512MB RAM WiFi/BT eMMC")
+	options+=("orangepipch5"                "Allwinner H5 quad core 1GB RAM")
+	options+=("orangepipc2"			"Allwinner H5 quad core 1GB RAM GBE SPI")
+	options+=("orangepioneh5"               "Allwinner H5 quad core 512MB/1GB RAM")
+	options+=("orangepiprime"		"Allwinner H5 quad core 2GB RAM GBE WiFi/BT")
+	options+=("orangepizeroplus"		"Allwinner H5 quad core 512MB RAM GBE WiFi SPI")
+	options+=("orangepizeroplus2h5"		"Allwinner H5 quad core 512MB RAM WiFi/BT eMMC")
 	options+=("orangepi3"			"Allwinner H6 quad core 1GB/2GB RAM GBE WiFi/BT eMMC USB3")
 	options+=("orangepi3-lts"		"Allwinner H6 quad core 2GB RAM GBE WiFi/BT-AW859A eMMC USB3")
-	#options+=("orangepilite2"		"Allwinner H6 quad core 1GB RAM WiFi/BT USB3")
-	#options+=("orangepioneplus"		"Allwinner H6 quad core 1GB RAM GBE")
+	options+=("orangepilite2"		"Allwinner H6 quad core 1GB RAM WiFi/BT USB3")
+	options+=("orangepioneplus"		"Allwinner H6 quad core 1GB RAM GBE")
 	options+=("orangepizero2"		"Allwinner H616 quad core 512MB/1GB RAM WiFi/BT GBE SPI")
 	#options+=("orangepizero2-b"		"Allwinner H616 quad core 512MB/1GB RAM WiFi/BT GBE SPI")
 	#options+=("orangepizero2-lts"           "Allwinner H616 quad core 1.5GB RAM WiFi/BT GBE SPI")
