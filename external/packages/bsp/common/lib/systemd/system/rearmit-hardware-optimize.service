@@ -5,7 +5,7 @@
 [Unit]
 Description=ReARM.it hardware optimization
 Before=basic.target
-After=sysinit.target local-fs.target rearmit-hardware-monitor.target
+After=sysinit.target local-fs.target orangepi-hardware-monitor.target
 DefaultDependencies=no
 
 [Service]

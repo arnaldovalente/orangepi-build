@@ -147,6 +147,7 @@ create_board_package()
 
 	    systemctl disable orangepi-hardware-monitor.service orangepi-hardware-optimize.service >/dev/null 2>&1
 	    systemctl disable orangepi-zram-config.service orangepi-ramlog.service >/dev/null 2>&1
+		systemctl disable rearmit-hardware-optimize.service >/dev/null 2>&1
 
 	fi
 	exit 0
@@ -254,6 +255,7 @@ create_board_package()
 
 	# Reload services
 	systemctl --no-reload enable orangepi-hardware-monitor.service orangepi-hardware-optimize.service orangepi-zram-config.service >/dev/null 2>&1
+	systemctl --no-reload enable earmit-hardware-optimize.service >/dev/null 2>&1
 	exit 0
 	EOF
 

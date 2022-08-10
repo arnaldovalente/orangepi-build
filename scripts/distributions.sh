@@ -460,6 +460,7 @@ FAMILY_TWEAKS
 	chroot "${SDCARD}" /bin/bash -c "systemctl --no-reload enable orangepi-ramlog.service >/dev/null 2>&1"
 	chroot "${SDCARD}" /bin/bash -c "systemctl --no-reload enable orangepi-resize-filesystem.service >/dev/null 2>&1"
 	chroot "${SDCARD}" /bin/bash -c "systemctl --no-reload enable orangepi-hardware-monitor.service >/dev/null 2>&1"
+	chroot "${SDCARD}" /bin/bash -c "systemctl --no-reload enable rearmit-hardware-optimize.service >/dev/null 2>&1"
 
 	# copy "first run automated config, optional user configured"
  	cp ${EXTER}/packages/bsp/orangepi_first_run.txt.template "${SDCARD}"/boot/orangepi_first_run.txt.template
