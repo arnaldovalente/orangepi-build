@@ -22,10 +22,6 @@ toolchains
 
 mkimage.sh
 
-!external/patch/u-boot
-!external/patch/kernel
-!external/config/kernel
-
 external/cache/.gpg
 external/cache/hash
 external/cache/rootfs
