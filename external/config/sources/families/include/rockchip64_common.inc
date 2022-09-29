@@ -13,7 +13,13 @@ SERIALCON=${SERIALCON:=$([ $BRANCH == "legacy" ] && echo "ttyFIQ0:1500000" || ec
 GOVERNOR="ondemand"
 BOOTBRANCH="branch:v2020.10-rockchip64"
 PACKAGE_LIST_FAMILY="ethtool"
-PACKAGE_LIST_DESKTOP_FAMILY="fcitx fonts-wqy-zenhei"
+
+if [[ $RELEASE == "jammy" ]]; then
+	PACKAGE_LIST_DESKTOP_FAMILY="fcitx fonts-wqy-zenhei xfce4-volumed"
+else
+	PACKAGE_LIST_DESKTOP_FAMILY="fcitx fonts-wqy-zenhei"
+fi
+
 [[ $BRANCH != "next" ]] && PACKAGE_LIST_FAMILY_REMOVE="mpv"
 
 RKBIN_DIR="$EXTER/cache/sources/rkbin-tools"
@@ -233,13 +239,6 @@ family_tweaks()
 		chroot $SDCARD /bin/bash -c "systemctl --no-reload enable rk3399-bluetooth.service >/dev/null 2>&1"
 	fi
 
-	if [[ $BOARD =~ orangepi800|orangepi4-lts ]]; then
-
-		[[ $RELEASE == bookworm ]] && dpkg_install_deb_chroot "$EXTER/cache/debs/extra/${RELEASE}-utils/wpasupplicant_2.10-9_arm64.deb"
-		[[ $RELEASE == jammy ]] && dpkg_install_deb_chroot "$EXTER/cache/debs/extra/${RELEASE}-utils/wpasupplicant_2.10-6ubuntu1_arm64.deb"
-
-	fi
-
 	if [[ $RELEASE == jammy && $BUILD_DESKTOP == yes && $install_chromium == yes ]]; then
 
 		chromium_name="chromium-browser_101.0.4951.15-0ubuntu1~ppa1~22.04.1_arm64.deb"
@@ -255,6 +254,20 @@ family_tweaks()
 
 		install_deb_chroot $chromium_extra
 		install_deb_chroot $chromium
+
+	fi
+
+	if [[ $RELEASE == jammy && $BUILD_DESKTOP == yes && $install_firefox == yes ]]; then
+
+		firefox_name="firefox-esr_102.1.0esr+build1-0ubuntu0.22.04.1_arm64.deb"
+		firefox_url="https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu/pool/main/f/firefox-esr/"
+		firefox=${EXTER}/cache/debs/arm64/${firefox_name}
+
+		if [[ ! -f $firefox ]]; then
+			wget -P ${EXTER}/cache/debs/arm64 ${firefox_url}/${firefox_name}
+		fi
+
+		install_deb_chroot $firefox
 
 	fi
 

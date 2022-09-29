@@ -39,13 +39,6 @@ family_tweaks()
 	#	#install_deb_chroot "$EXTER/cache/debs/extra/bullseye-desktop/scratch-desktop_3.26.0_arm64.deb"
 	#fi
 
-	if [[ $BOARD =~ orangepi3-lts|orangepizero2|orangepizero2-b|orangepizero2-lts ]]; then
-
-		[[ $RELEASE == bookworm ]] && dpkg_install_deb_chroot "$EXTER/cache/debs/extra/${RELEASE}-utils/wpasupplicant_2.10-9_arm64.deb"
-		[[ $RELEASE == jammy ]] && dpkg_install_deb_chroot "$EXTER/cache/debs/extra/${RELEASE}-utils/wpasupplicant_2.10-6ubuntu1_arm64.deb"
-
-	fi
-
 	if [[ $RELEASE == jammy && $BUILD_DESKTOP == yes && $install_chromium == yes ]]; then
 
 		chromium_name="chromium-browser_101.0.4951.15-0ubuntu1~ppa1~22.04.1_arm64.deb"
@@ -61,6 +54,20 @@ family_tweaks()
 
 		install_deb_chroot $chromium_extra
 		install_deb_chroot $chromium
+
+	fi
+
+	if [[ $RELEASE == jammy && $BUILD_DESKTOP == yes && $install_firefox == yes ]]; then
+
+		firefox_name="firefox-esr_102.1.0esr+build1-0ubuntu0.22.04.1_arm64.deb"
+		firefox_url="https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu/pool/main/f/firefox-esr/"
+		firefox=${EXTER}/cache/debs/arm64/${firefox_name}
+
+		if [[ ! -f $firefox ]]; then
+			wget -P ${EXTER}/cache/debs/arm64 ${firefox_url}/${firefox_name}
+		fi
+
+		install_deb_chroot $firefox
 
 	fi
 
